@@ -1,0 +1,77 @@
+[
+  {
+    "student_id": "1",
+    "preferences": [
+      {"project_id": "2", "score": 4},
+      {"project_id": "4", "score": 3},
+      {"project_id": "6", "score": 2},
+      {"project_id": "8", "score": 1},
+      {"project_id": "10", "score": 5},
+      {"project_id": "1", "score": 3},
+      {"project_id": "3", "score": 2},
+      {"project_id": "5", "score": 1},
+      {"project_id": "7", "score": 4},
+      {"project_id": "9", "score": 0}
+    ]
+  },
+  {
+    "student_id": "2",
+    "preferences": [
+      {"project_id": "1", "score": 3},
+      {"project_id": "3", "score": 4},
+      {"project_id": "5", "score": 2},
+      {"project_id": "7", "score": 1},
+      {"project_id": "9", "score": 5},
+      {"project_id": "2", "score": 2},
+      {"project_id": "4", "score": 1},
+      {"project_id": "6", "score": 4},
+      {"project_id": "8", "score": 3},
+      {"project_id": "10", "score": 0}
+    ]
+  },
+  {
+    "student_id": "3",
+    "preferences": [
+      {"project_id": "2", "score": 5},
+      {"project_id": "4", "score": 4},
+      {"project_id": "6", "score": 3},
+      {"project_id": "8", "score": 2},
+      {"project_id": "10", "score": 1},
+      {"project_id": "1", "score": 4},
+      {"project_id": "3", "score": 3},
+      {"project_id": "5", "score": 2},
+      {"project_id": "7", "score": 1},
+      {"project_id": "9", "score": 0}
+    ]
+  },
+  {
+    "student_id": "4",
+    "preferences": [
+      {"project_id": "1", "score": 2},
+      {"project_id": "3", "score": 3},
+      {"project_id": "5", "score": 4},
+      {"project_id": "7", "score": 5},
+      {"project_id": "9", "score": 1},
+      {"project_id": "2", "score": 3},
+      {"project_id": "4", "score": 2},
+      {"project_id": "6", "score": 1},
+      {"project_id": "8", "score": 4},
+      {"project_id": "10", "score": 0}
+    ]
+  },
+  {
+    "student_id": "5",
+    "preferences": [
+      {"project_id": "2", "score": 5},
+      {"project_id": "4", "score": 2},
+      {"project_id": "6", "score": 4},
+      {"project_id": "8", "score": 3},
+      {"project_id": "10", "score": 1},
+      {"project_id": "1", "score": 1},
+      {"project_id": "3", "score": 4},
+      {"project_id": "5", "score": 2},
+      {"project_id": "7", "score": 3},
+      {"project_id": "9", "score": 0}
+    ]
+  }
+]

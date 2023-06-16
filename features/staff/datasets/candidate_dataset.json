@@ -1,0 +1,32 @@
+[
+  {
+    "name": "Student 1",
+    "skills": ["Python", "Java", "C++"],
+    "suitability": 0.8
+  },
+  {
+    "name": "Student 2",
+    "skills": ["Python", "C++"],
+    "suitability": 0.6
+  },
+  {
+    "name": "Student 3",
+    "skills": ["Java"],
+    "suitability": 0.9
+  },
+  {
+    "name": "Student 4",
+    "skills": ["Python", "C++"],
+    "suitability": 0.7
+  },
+  {
+    "name": "Student 5",
+    "skills": ["Python", "Java"],
+    "suitability": 0.75
+  },
+  {
+    "name": "Student 6",
+    "skills": ["C++"],
+    "suitability": 0.5
+  }
+]

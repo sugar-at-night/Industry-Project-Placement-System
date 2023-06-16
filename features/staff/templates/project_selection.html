@@ -1,0 +1,405 @@
+{% extends "base.html" %}
+{% block title %} Project Selection {% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-auto me-auto">
+                <h3 class="fw-bold text-left">Project Selection</h3>
+            </div>
+            <div class="col-auto mt-2 mb-2">
+                <a
+                    type="button"
+                    class="btn btn-rounded btn-primary btn-sm fw-bold"
+                    href="{{ url_for('staff.student_selection') }}"
+                >
+                STUDENT SELECTION
+            </a>
+            </div>
+        </div>
+        <!-- Get all student -->
+        <table class="table align-middle mb-0 bg-white">
+            <thead class="bg-light">
+            <tr>
+                <th>Student</th>
+                <th>Potential Projects</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+                {% for student in students %}
+                    <tr>
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <img
+                                    src="{{ url_for('static', filename='img/profile.png') }}"
+                                    alt=""
+                                    style="width: 45px; height: 45px"
+                                    class="rounded-circle"
+                                    />
+                                <div class="ms-3">
+                                <p class="fw-bold mb-1"> {{ student.1 }}</p>
+                                <p class="text-muted mb-0">{{ student.4 }}</p>
+                                <p class="text-muted mb-0">{{ student.0 }}</p>
+                                </div>
+                            </div>
+                        </td>
+                        <td>{{student.6}}</td>
+                        <td>
+                            <button
+                                    type="button"
+                                    class="btn btn-rounded btn-primary btn-sm fw-bold"
+                                    data-mdb-toggle="modal" 
+                                    data-mdb-whatever="{{student}}"
+                                    data-mdb-target="#configModal"
+                                    data-mdb-ripple-color="dark"
+                                    >
+                                 Selection
+                            </button>
+                          
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <!-- Modal -->
+        <div class="modal fade" id="configModal" tabindex="1" data-mdb-backdrop="false" aria-labelledby="configModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="configModalLabel">Project Selection </h5>
+                        <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Tabs navs -->
+                        <div class="row">
+                            <div class="d-flex align-items-center">
+                                <img
+                                    src="{{ url_for('static', filename='img/profile.png') }}"
+                                    alt=""
+                                    style="width: 70px; height: 70px"
+                                    class="rounded-circle"
+                                    href="{{ url_for('student.profile') }}"
+                                    />
+                                <div class="ms-3">
+                                <p class="fw-bold mb-1" id="preferred_name_label"></p>
+                                <p class="text-muted mb-0" id="formal_name_label"></p>
+                                <p class="text-muted mb-0" id="student_id_label"></p>
+                                <p class="text-muted mb-0" id="student_skills_label"></p>
+                                <p class="text-muted mb-0" id="student_projects_label"></p>
+                                </div>
+                            </div>
+                        </div>
+                        <ul class="nav nav-tabs mb-3 mt-3" id="ex1" role="tablist">
+                            <li class="nav-item" role="presentation">
+                            <a
+                                class="nav-link active"
+                                id="ex1-tab-1"
+                                data-mdb-toggle="tab"
+                                href="#ex1-tabs-1"
+                                role="tab"
+                                aria-controls="ex1-tabs-1"
+                                aria-selected="true"
+                                >Auto Selection</a
+                            >
+                            </li>
+                            <li class="nav-item" role="presentation">
+                            <a
+                                class="nav-link"
+                                id="ex1-tab-2"
+                                data-mdb-toggle="tab"
+                                href="#ex1-tabs-2"
+                                role="tab"
+                                aria-controls="ex1-tabs-2"
+                                aria-selected="false"
+                                >Manual Selection</a
+                            >
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <a
+                                    class="nav-link"
+                                    id="ex1-tab-3"
+                                    data-mdb-toggle="tab"
+                                    href="#ex1-tabs-3"
+                                    role="tab"
+                                    aria-controls="ex1-tabs-3"
+                                    aria-selected="false"
+                                    >Speed Netwroking</a
+                                >
+                            </li>
+                        </ul>
+                        <!-- Tabs navs -->
+                        
+                        <!-- Tabs content -->
+                        <div class="tab-content" id="ex1-content">
+                            <div class="tab-pane fade show active" id="ex1-tabs-1" role="tabpanel" aria-labelledby="ex1-tab-1">
+                                <form method="POST" class="needs-validation" onsubmit="return selectAll()" id="configform" action="{{ url_for('staff.project_auto_selection') }}">
+                                    <div class="mb-3">
+                                        <label for="projects_auto" class="col-form-label">Potential Projects</label>
+                                        <select class="form-select" id="projects_auto" required name="projects_auto" data-placeholder="Readonly" multiple>
+                                            {% for row in projects %}
+                                                <option value="{{row.id}}">{{row.name}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <input type="hidden" id="student_id_auto" name="student_id_auto">
+                                        <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
+                                        <button type="submit" id="saveconfig" class="btn btn-primary">Save</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="tab-pane fade" id="ex1-tabs-2" role="tabpanel" aria-labelledby="ex1-tab-2">
+                                <form method="POST" class="needs-validation" onsubmit="return selectAll()" id="manual_selection" action="{{ url_for('staff.project_manual_selection') }}">
+                                    <div class="mb-3">
+                                        <label for="projects_manual" class="col-form-label">Manaul Projects Selection</label>
+                                        <select class="form-select" id="projects_manual" required name="projects_manual" data-placeholder="Choose anything" multiple>
+                                            {% for row in projects %}
+                                                <option value="{{row.id}}">{{row.name}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <input type="hidden" id="student_id_manual" name="student_id_manual">
+                                        <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
+                                        <button type="submit" id="manual_selection_submit" class="btn btn-primary">Save</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="tab-pane fade" id="ex1-tabs-3" role="tabpanel" aria-labelledby="ex1-tab-3">
+                                <form method="POST" class="needs-validation" onsubmit="return selectAll()" id="speed_networking" action="{{ url_for('staff.speed_networking_preference') }}">
+                                    <div class="mb-3">
+                                        <label for="projects_manual" class="col-form-label">Speed Networking: Student Preference</label>
+                                    </div>
+                                    <table id="speed_networking_table">
+
+                                    </table>
+
+                                </form>
+                            </div>
+                        </div>
+                        <!-- Tabs content -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block scripts %}
+
+<script>
+    var configModal = document.getElementById('configModal')
+
+    configModal.addEventListener('show.mdb.modal', function (event) {
+        // Button that triggered the modal
+        var button = event.relatedTarget
+        var currentconfig = button.getAttribute('data-mdb-whatever')
+        var modalProjects_auto = configModal.querySelector('#projects_auto')
+        var modalProjects_manual = configModal.querySelector('#projects_manual')
+        // Extract the values from the string using regular expressions
+        currentconfig =currentconfig.replace(/'/g, '');
+        const values = currentconfig.slice(1, -1).split(',').map(value => value.trim());
+
+        const preffered_projects = values.slice(6);
+        // Define the keys corresponding to the values
+        const keys = ['studentId', 'formalName', 'alternativeName', 'preferredName', 'email', 'phone'];
+
+        // Create an object by pairing the keys with the values
+        const studentData = keys.reduce((obj, key, index) => {
+            obj[key] = values[index] === 'None' ? null : values[index];
+            return obj;
+        }, {});
+
+        // Update the modal's content.
+        document.getElementById("student_id_label").textContent = "Student Id" + ": " + studentData.studentId ?? "";
+        document.getElementById("formal_name_label").textContent = "Formal Name" + ": " + studentData.formalName ?? "";
+        document.getElementById("preferred_name_label").textContent = "Preferred Name" + ": " + studentData.preferredName ?? "";
+        document.getElementById("student_id_auto").value = studentData.studentId ?? "";
+        document.getElementById("student_id_manual").value = studentData.studentId ?? "";
+        document.getElementById("student_projects_label").textContent = "Current Projects" + ": " + preffered_projects.join(", ") ?? "";
+
+        // Get the student id
+        studentId = studentData.studentId ?? "",
+        projects_auto_selected = [];
+
+        // Fetch the auto selection
+        fetch_auto_selection(studentId)
+        .then(data =>  {
+            projects_auto_selected = data.projects_auto_selected;
+            const project_names = projects_auto_selected.map(obj => obj.name);
+            document.getElementById("student_skills_label").textContent = "Skills" + ": " + data.student_skills.join(", ") ?? "";
+
+            // Iterate over the options and set the selected attribute based on auto selection
+            for (var i = 0; i < modalProjects_auto.options.length; i++) {
+                if (project_names.includes(modalProjects_auto.options[i].label)) {
+                    modalProjects_auto.options[i].selected = true;
+                }
+            }
+
+            // Iterate over the manual options and set from the preffered projects
+            for (var i = 0; i < modalProjects_manual.options.length; i++) {
+                if (preffered_projects.includes(modalProjects_manual.options[i].label)) {
+                    modalProjects_manual.options[i].selected = true;
+                }
+            }
+
+            $('#projects_auto' ).select2( {
+                theme: "bootstrap-5",
+                width: $( this ).data( 'width' ) ? $( this ).data( 'width' ) : $( this ).hasClass( 'w-100' ) ? '100%' : 'style',
+                placeholder: $( this ).data( 'placeholder' ),
+                closeOnSelect: false,
+            });
+
+            // Disable the auto selection mouse click
+            $('#projects_auto').on('select2:opening', function(e) {
+                e.preventDefault();
+            });
+
+            // Iterate over the options and set the selected attribute based on the pre-selected languages
+            $('#projects_manual' ).select2( {
+                theme: "bootstrap-5",
+                width: $( this ).data( 'width' ) ? $( this ).data( 'width' ) : $( this ).hasClass( 'w-100' ) ? '100%' : 'style',
+                placeholder: $( this ).data( 'placeholder' ),
+                closeOnSelect: false,
+            });
+
+            // Fetch the speed networking preference
+            fetch_speed_networking_preference(studentId)
+            .then(data =>  {
+                console.log(data);
+                // Create the form element
+                const form = document.getElementById("speed_networking");
+                // Create the table element
+                const table = document.getElementById("speed_networking_table");
+                table.classList.add("table");
+
+                // Create the table header
+                const thead = document.createElement("thead");
+                const headerRow = document.createElement("tr");
+                const idHeader = document.createElement("th");
+                idHeader.textContent = "Project ID";
+                const scoreHeader = document.createElement("th");
+                scoreHeader.textContent = "Score";
+                headerRow.appendChild(idHeader);
+                headerRow.appendChild(scoreHeader);
+                thead.appendChild(headerRow);
+                table.appendChild(thead);
+
+                // Create the table body
+                const tbody = document.createElement("tbody");
+                data.forEach((project) => {
+                    const row = document.createElement("tr");
+                    const idCell = document.createElement("td");
+                    idCell.textContent = project.project_id;
+                    const scoreCell = document.createElement("td");
+                    const scoreInput = document.createElement("input");
+                    scoreInput.type = "number";
+                    // input name is the project id
+                    scoreInput.name = `project_${project.project_id}`;
+                    scoreInput.classList.add("form-control");
+                    scoreInput.value = project.score;
+                    scoreInput.min = 0;
+                    scoreInput.max = 5;
+                    scoreCell.appendChild(scoreInput);
+                    row.appendChild(idCell);
+                    row.appendChild(scoreCell);
+                    tbody.appendChild(row);
+                });
+                table.appendChild(tbody);
+
+                // Create hidden input for student id
+                const studentIdInput = document.createElement("input");
+                studentIdInput.type = "hidden";
+                studentIdInput.name = "student_id";
+                studentIdInput.value = studentId;
+                form.appendChild(studentIdInput);
+
+                const submitButton = document.createElement("input");
+                submitButton.type = "submit";
+                submitButton.classList.add("btn");
+                submitButton.classList.add("btn-primary");
+                submitButton.value = "Update Preferences";
+                form.appendChild(submitButton);
+            });
+        });
+
+            
+        // Fetch the manual selection
+        configModal.addEventListener('hide.mdb.modal', function (event) {
+            config = {}
+            // Reset auto selection
+            for (var i = 0; i < modalProjects_auto.options.length; i++) {
+                modalProjects_auto.options[i].selected = false;
+            }
+
+            // Reset manual selection
+            for (var i = 0; i < modalProjects_manual.options.length; i++) {
+                modalProjects_manual.options[i].selected = false;
+            }
+        })
+        
+    })
+
+    async function fetch_manual_selection() {
+        try {
+            const response = await fetch('/staff/project_manual_selection', {
+                method: 'GET'
+            });
+
+            if (!response.ok) {
+            throw new Error('Request failed with status: ' + response.status);
+            }
+
+            const data = await response.json();
+            console.log(data);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    async function fetch_auto_selection(studentId) {
+    try {
+        const url = `/staff/project_auto_selection?studentId=${studentId}`;
+
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error('Request failed with status: ' + response.status);
+        }
+
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+// Get speed networking preference
+async function fetch_speed_networking_preference(studentId) {
+    try {
+        const response = await fetch(`/staff/speed_networking_preference?studentId=${studentId}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error('Request failed with status: ' + response.status);
+        }
+
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error(error);
+    }
+}
+</script>
+   
+{% endblock %}
+

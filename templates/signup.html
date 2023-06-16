@@ -1,0 +1,107 @@
+{% extends "login_base.html" %}
+
+<!-- title -->
+{% block title %}Login{% endblock %}
+
+<!-- content -->
+{% block content %}
+  <div class="container mt-5">
+    <h1>Register</h1>
+    <form method="post" action="{{ url_for('signup') }}">
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" class="form-control" id="username" name="username" required>
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" class="form-control" id="password" name="password" required>
+      </div>
+      <div class="form-group">
+        <label for="recovery_email">Recovery Email</label>
+        <input type="email" class="form-control" id="recovery_email" name="recovery_email" required>
+      </div>
+      <div class="form-group">
+        <label for="role">Role</label>
+        <select class="form-control" id="role" name="role" required>
+          <option value="student">Student</option>
+          <option value="mentor">Mentor</option>
+          <option value="staff">Staff</option>
+        </select>
+      </div>
+
+      <!-- Additional fields for Mentor -->
+      <div id="mentor_fields" style="display: none;">
+        <div class="form-group">
+          <label for="formal_name">Formal Name (Mentor)</label>
+          <input type="text" class="form-control" id="formal_name" name="formal_name" >
+        </div>
+        <div class="form-group">
+          <label for="contact_email">Contact Email (Mentor)</label>
+          <input type="email" class="form-control" id="contact_email" name="contact_email" >
+        </div>
+        <div class="form-group">
+          <label for="phone_number">Phone Number (Mentor)</label>
+          <input type="text" class="form-control" id="phone_number" name="phone_number">
+        </div>
+      </div>
+
+      <!-- Additional fields for Staff -->
+      <div id="staff_fields" style="display: none;">
+        <div class="form-group">
+          <label for="formal_name_staff">Formal Name (Staff)</label>
+          <input type="text" class="form-control" id="formal_name_staff" name="formal_name_staff" >
+        </div>
+        <div class="form-group">
+          <label for="contact_email_staff">Contact Email (Staff)</label>
+          <input type="email" class="form-control" id="contact_email_staff" name="contact_email_staff" >
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-primary">Register</button>
+    </form>
+    <div style="text-align: right;">
+      <p>Already have an account? <a href="{{ url_for('login') }}">Login</a></p>
+    </div>
+  </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  // Show or hide additional fields based on the selected role
+  document.getElementById("role").addEventListener("change", function () {
+    var mentorFields = document.getElementById("mentor_fields");
+    var staffFields = document.getElementById("staff_fields");
+    var mentorInputFields = mentorFields.querySelectorAll("input[required]");
+    var staffInputFields = staffFields.querySelectorAll("input[required]");
+
+    if (this.value === "mentor") {
+      mentorFields.style.display = "block";
+      staffFields.style.display = "none";
+      mentorInputFields.forEach(function (field) {
+        field.required = true;
+      });
+      staffInputFields.forEach(function (field) {
+        field.required = false;
+      });
+    } else if (this.value === "staff") {
+      mentorFields.style.display = "none";
+      staffFields.style.display = "block";
+      mentorInputFields.forEach(function (field) {
+        field.required = false;
+      });
+      staffInputFields.forEach(function (field) {
+        field.required = true;
+      });
+    } else {
+      mentorFields.style.display = "none";
+      staffFields.style.display = "none";
+      mentorInputFields.forEach(function (field) {
+        field.required = false;
+      });
+      staffInputFields.forEach(function (field) {
+        field.required = false;
+      });
+    }
+  });
+</script>
+{% endblock %}

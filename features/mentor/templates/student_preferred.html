@@ -1,0 +1,273 @@
+{% extends "base.html" %}
+{% block title %} Project Selection {% endblock %}
+
+{% block css %}
+    <meta charset="utf-8">
+    <title>Project List</title>
+
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static',filename='css/bootstrap.css') }}">
+
+    <link type="text/css" rel="stylesheet" href=" {{ url_for('static',filename='css/index.css') }}">
+    <!--css、JS-->
+
+    <!--Jquery-->
+
+    <script src="{{ url_for('static',filename='datatables/js/jquery.js') }}"></script>
+
+{% endblock %}
+
+{% block content %}
+<div id="content-area" class="container">
+    <div class="row">
+        <div class="col">
+            <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
+                <ol class="breadcrumb mb-0">
+                    <li class="breadcrumb-item"><a href="{{ url_for('mentor.dashboard') }}">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Preferred Student Selection</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
+    <div class="row">
+        <div>
+            <h3 style="text-align: center">Student Selection</h3>
+        </div>
+    </div>
+    <!-- Project dropdown -->
+    <div class="row">
+       <!-- Table for students in each project -->
+        <div class="col-md-12">
+            <table class="table table-hover table-striped table-bordered" id="student" style="padding: 20px;">
+                <thead>
+                <tr style="text-align: center">
+                    <th>Porject Name</th>
+                    <th>Company Name</th>
+                    <th>Student Name</th>
+                    <th>Preferred Status</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for student in students %}
+                    <tr>
+                        <td>{{ student.project_name }}</td>
+                        <td>{{ student.company_name }}</td>
+                        <td>{{ student.formal_name }}</td>
+                        <td>
+                            <!-- There is a problem with Emun limitation on mysql. -->
+                            {%if student.preferred_status == "NotSele" %}
+                                Not selected
+                            {% elif student.preferred_status == "NotAvl" %}
+                                Not Available
+                            {% else %}
+                                {{ student.preferred_status }}
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if student.preferred_status == "Selected" %}
+                                <!-- <button type="button" class="btn btn-primary btn-sm" disabled  data-mdb-whatever="{{student}}" id="selected">Selected </button>  -->
+                                <button type="button" class="btn btn-primary btn-sm"  data-mdb-whatever="{{student}}" id="not_selected">Not Selected </button> 
+                                <button 
+                                    type="button" 
+                                    class="btn btn-primary btn-sm" 
+                                    data-mdb-toggle="modal"  
+                                    data-mdb-target="#configModal"
+                                    data-mdb-ripple-color="dark"   
+                                    data-mdb-whatever="{{student}}" 
+                                    id="request_interview">
+                                    Request Interview 
+                                </button> 
+                            {% elif student.preferred_status == "Pending" or  student.preferred_status == "NotSele"%}
+                                <button type="button" class="btn btn-primary btn-sm"  data-mdb-whatever="{{student}}" id="selected">Selected </button> 
+                            {% elif student.preferred_status == "Interview" %}
+                                <button type="button" class="btn btn-primary btn-sm"  data-mdb-whatever="{{student}}" id="not_selected">Not Selected </button> 
+                                <button type="button" class="btn btn-primary btn-sm"  data-mdb-whatever="{{student}}" id="preferred">Make an offer</button> 
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="modal fade" id="configModal" tabindex="1" data-mdb-backdrop="false" aria-labelledby="configModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="configModalLabel">Request an interview </h5>
+                        <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="POST" class="needs-validation" id="notify" action="{{ url_for('mentor.notify_student') }}">
+                            <div class="mb-3">
+                                <label for="mentor_email" class="col-form-label">To</label>
+                                <input type="text" disabled readonly class="form-control" id="student_email" name="student_email" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="subject" class="col-form-label">Subject</label>
+                                <input type="text" class="form-control" id="subject" name="subject" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="message" class="col-form-label">Message</label>
+                                <textarea class="form-control" id="message" name="message" required></textarea>
+                            </div>  
+                            <div class="modal-footer">
+                                <input type="hidden" id="student_id" name="student_id">
+                                <input type="hidden" id="action" name="action">
+                                <input type="hidden" id="project_id" name="project_id">
+                                <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
+                                <button type="submit" id="manual_selection_submit" class="btn btn-primary">Send</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+      <!-- List of students from the placement -->
+    <!-- Allow mentor to check there profile -->
+    <!-- Allow mentor to select from the placement -->
+    <!-- All them to send email about interview -->
+   
+{% endblock %}
+{% block scripts %}
+
+<script>
+    var selectedButton = document.getElementById('selected')
+    var notSelectedButton = document.getElementById('not_selected')
+    var requestInterviewButton = document.getElementById('request_interview')
+    var preferredButton = document.getElementById('preferred')
+
+    if (selectedButton) {
+        selectedButton.addEventListener('click', function(event) {
+        console.log("selected")
+        var button = event.target
+        var student = button.getAttribute('data-mdb-whatever')
+        // Replace single quotes with double quotes
+        const validJSON = student.replace(/'/g, '"');
+
+        // Parse the JSON string into an object
+        const studentDataArray = JSON.parse(validJSON);
+
+        var student_id = studentDataArray.id
+        var project_id = studentDataArray.project_id
+        var preferred_status = "Selected"
+        var data = {
+            student_id: student_id,
+            project_id: project_id,
+            preferred_status: preferred_status
+        }
+        console.log(data)
+        post_preferred_status(data)
+        .then(data => {
+            console.log(data)
+            location.reload();
+        });
+
+    })
+    }
+
+   if (notSelectedButton) {
+        notSelectedButton.addEventListener('click', function(event) {
+        console.log("not selected")
+        var button = event.target
+        var student = button.getAttribute('data-mdb-whatever')
+        // Replace single quotes with double quotes
+        const validJSON = student.replace(/'/g, '"');
+
+        // Parse the JSON string into an object
+        const studentDataArray = JSON.parse(validJSON);
+
+        var student_id = studentDataArray.id
+        var project_id = studentDataArray.project_id
+        var preferred_status = "NotSele"
+        var data = {
+            student_id: student_id,
+            project_id: project_id,
+            preferred_status: preferred_status
+        }
+        console.log(data)
+        post_preferred_status(data)
+        .then(data => {
+            console.log(data)
+            location.reload();
+        });
+
+    })
+   }
+
+    if (preferredButton) {
+        preferredButton.addEventListener('click', function(event) {
+            console.log("preferred")
+            var button = event.target
+            var student = button.getAttribute('data-mdb-whatever')
+            // Replace single quotes with double quotes
+            const validJSON = student.replace(/'/g, '"');
+
+            // Parse the JSON string into an object
+            const studentDataArray = JSON.parse(validJSON);
+
+            var student_id = studentDataArray.id
+            var project_id = studentDataArray.project_id
+            var preferred_status = "Preferred"
+            var data = {
+                student_id: student_id,
+                project_id: project_id,
+                preferred_status: preferred_status
+            }
+            console.log(data)
+            post_preferred_status(data)
+            .then(data => {
+                console.log(data)
+                location.reload();
+            });
+
+        })
+    }
+
+    async function post_preferred_status(data) {
+        try {
+            const response = await fetch('/mentor/student_preferred_update', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                "student_id": data.student_id,
+                "project_id": data.project_id,
+                "preferred_status": data.preferred_status
+            })
+            });
+
+            if (!response.ok) {
+                throw new Error('Request failed with status: ' + response.status);
+            }
+
+            const result = await response.json();
+            return result;
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    // Modal for interview request
+    var configModal = document.getElementById('configModal')
+    configModal.addEventListener('show.mdb.modal', function (event) {
+        var button = event.relatedTarget
+        var currentconfig = button.getAttribute('data-mdb-whatever')
+        // Extract the values from the string using regular expressions
+        console.log(currentconfig);
+        // Use eval() to evaluate the string as JavaScript code and convert it into an object
+        const parsedObject = eval("(" + currentconfig + ")");
+        console.log(parsedObject);
+
+        document.getElementById('student_id').value = parsedObject.id;
+        document.getElementById('student_email').value = parsedObject.email;
+        document.getElementById('action').value = "Interview Request";
+        document.getElementById('project_id').value = parsedObject.project_id;
+
+    })
+</script>
+   
+{% endblock %}

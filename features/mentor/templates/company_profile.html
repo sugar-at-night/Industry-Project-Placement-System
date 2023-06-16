@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Company Profile
+{% endblock %}
+{% block css %}
+    <meta charset="utf-8">
+    <title>Project List</title>
+
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static',filename='css/bootstrap.css') }}">
+
+    <link type="text/css" rel="stylesheet" href=" {{ url_for('static',filename='css/index.css') }}">
+    <!--css、JS-->
+
+    <!--Jquery-->
+
+    <script src="{{ url_for('static',filename='datatables/js/jquery.js') }}"></script>
+
+{% endblock %}
+
+{% block content %}
+<div id="title">
+
+</div>
+
+<div id="content-area" class="container">
+    <div class="row">
+        <div class="col">
+            <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
+                <ol class="breadcrumb mb-0">
+                    <li class="breadcrumb-item"><a href="{{ url_for('mentor.dashboard') }}">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Edit Company Profile</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
+    <h3 style="text-align: center">Company Profile</h3>
+
+    <form action="{{ url_for('mentor.company_profile') }}" method="POST">
+        <div class="form-group">
+            <label for="company_name">Company Name:</label>
+            <input type="text" class="form-control" id="company_name" name="company_name" value="{{ company_name }}" required>
+        </div>
+        <div class="form-group">
+            <label for="company_detail">Company Detail:</label>
+            <textarea class="form-control" id="company_detail" name="company_detail" required>{{ company_detail }}</textarea>
+        </div>
+        <div class="form-group">
+            <label for="website">Website:</label>
+            <input type="text" class="form-control" id="website" name="website" value="{{ website }}">
+        </div>
+        <div class="row">
+            <div class="=col-8 offset-6">
+              <button type="submit" class="btn btn-primary" style="width: 120px">SAVE</button>
+              <a href="{{ url_for('mentor.dashboard') }}" >
+                <button type="button" class="btn btn-secondary" style="width: 120px">CANCEL</button>
+              </a>
+           </div>
+        </div>
+    </form>
+</div>
+{% endblock %}

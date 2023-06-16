@@ -1,0 +1,435 @@
+{% extends "base.html" %}
+{% block title %}Profile{% endblock %}
+{% block css %}
+    <meta charset="utf-8">
+    <title>project detail</title>
+
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static',filename='css/bootstrap.css') }}">
+
+    <link type="text/css" rel="stylesheet" href=" {{ url_for('static',filename='css/index.css') }}">
+    <!--css、JS-->
+
+    <!--Jquery-->
+
+    <script src="{{ url_for('static',filename='datatables/js/jquery.js') }}"></script>
+
+{% endblock %}
+{% block content %}
+    <div>
+        <div class="container">
+            {% if session.role == 'staff' or session.role == "mentor" %}
+            <div class="alert alert alert-warning">You are login as {{session.role}}</div>
+            {% endif %}
+            <div class="row">
+                <div class="col">
+                   <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-2">
+                   <ol class="breadcrumb mb-0">
+                       {% if session.role == 'staff' %}
+                       <li class="breadcrumb-item"><a href="{{ url_for('staff.dashboard') }}">Home</a></li>
+                       <li class="breadcrumb-item"><a href="{{ url_for('staff.view_student') }}">Student List</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Student Profile</li>
+                        {% elif session.role == 'mentor' %}
+                        <li class="breadcrumb-item"><a href="{{ url_for('mentor.dashboard') }}">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{{ url_for('mentor.student_list') }}">Student List</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Student Profile</li>
+                        {% elif session.role == 'student' %}
+                        <li class="breadcrumb-item"><a href="{{ url_for('student.dashboard') }}">Home</a></li>
+                         <li class="breadcrumb-item active" aria-current="page">Profile</li>
+                        {% endif %}
+                   </ol>
+                   </nav>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
+                    <ol class="breadcrumb mb-0">
+                        <!-- <li class="breadcrumb-item"><a href="{{ url_for('student.dashboard') }}">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">User Profile</li> -->
+                        <!-- Move right -->
+                        {% if user.is_survey_complete > 0 %}
+                            {% if session.role == "student" %}
+                                 <li class="ms-auto"><a href="{{ url_for('student.survey', student_id=user.student_id ) }}" class="btn btn-primary btn-sm">Edit Survey</a></li>
+                            {% endif %}  
+                            {% if session.role == 'staff' or session.role == "mentor" %}
+                                <li class="ms-auto"><a href="{{ url_for('student.survey', student_id=user.student_id ) }}" class="btn btn-primary btn-sm">View Survey</a></li>
+                            {% endif %}  
+                        {% else %}
+                            <li class="ms-auto"><a href="{{ url_for('student.survey', student_id=user.student_id) }}" class="btn btn-primary btn-sm">Survey</a></li>
+                        {% endif %}
+                    </ol>
+                    </nav>
+                </div>
+            </div>
+            <div class="row">
+            <div class="col-lg-4">
+                <div class="card mb-4">
+                <div class="card-body text-center">
+                    <img src="{{ url_for('static', filename='img/profile.png') }}" alt="Profile Picture"
+                    class="rounded-circle img-fluid" style="width: 150px;">
+                    <h5 class="my-3">{{ user.preferred_name }}</h5>
+                    <p class="text-muted mb-1">{{ user.role }}</p>
+                    <p class="text-muted mb-4">{{ user.city }}</p>
+                    <div class="d-flex justify-content-center mb-2">
+                    {% if session.role == 'student'%}
+                        <button 
+                            type="button" 
+                            class="btn btn-primary" 
+                            data-mdb-toggle="modal" 
+                            data-mdb-whatever="{{user}}"
+                            data-mdb-target="#configModal">
+                            Edit
+                        </button>
+                    {% endif %}
+                    </div>
+                </div>
+                </div>
+                <div class="card mb-4 mb-lg-0">
+                <div class="card-body p-0">
+                    <ul class="list-group list-group-flush rounded-3">
+                        <li class="list-group-item d-flex justify-content-between align-items-center p-3">
+                            <i class="fas fa-file-pdf fa-lg text-warning"></i>
+                            {% if user.cv_link == "" %}
+                                <p class="mb-0">No CV uploaded</p>
+                            {% else %}
+                                <p class="mb-0"><a target=”_blank” href="{{ url_for('student.view_cv') }}">Curriculum Vitae (CV)</a></p>
+                            {% endif %}
+                        </li>
+                    </ul>
+                </div>
+                </div>
+            </div>
+            <div class="col-lg-8">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h6 class="card-title">Project Preference</h6>
+                        <p class="card-text">{{ user.project_preference }}.</p>
+                    </div>
+                </div>
+
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0">Full Name</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0">{{ user.name }}</p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0">Student Id</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0">{{ user.student_id }}</p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0">Email</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0">{{ user.email }}</p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0">Phone</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0">{{ user.phone }}</p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0">City</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0">{{ user.city }}</p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0">Placement Status</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0">{{ user.placement_status.upper() }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card mb-4 mb-md-0">
+                            <div class="card-body">
+                                <!-- Loop through skills -->
+                                <p class="mb-4"><span class="text-primary font-italic me-1">Skills</span></p>
+                                {% for skill in user.skills %}
+                                    <p class="mb-1 mt-2" style="font-size: .77rem;">{{ skill }}</p>
+                                    <div class="progress rounded" style="height: 5px;">
+                                    <div class="progress-bar" role="progressbar" style="width: 80%" aria-valuenow="80"
+                                        aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Only show this to student -->
+                    {% if session.role == 'student'%}
+                        <div class="col-md-6">
+                            <div class="card mb-4 mb-md-0">
+                                <div class="card-body">
+                                    <!-- Loop through skills -->
+                                    <p class="mb-4"><span class="text-primary font-italic me-1">Offers</span></p>
+                                    <!-- Offer table -->
+                                    <div class="table-responsive mt-4">
+                                        <table class="table table-hover mb-0">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">Project Name</th>
+                                                    <th scope="col">Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for offer in offers %}
+                                                    <tr>
+                                                        <td>{{ offer.project_name }}</td>
+                                                        <td>
+                                                            {% if offer.status == "NotAvl" %}
+                                                                Not Available
+                                                            {% else %}
+                                                                {{ offer.status }}
+                                                            {% endif %}
+                                                           
+                                                        </td>
+                                                        <!-- If status Preferred show accepted button -->
+                                                        {% if offer.status == "Preferred" %}
+                                                            <td>
+                                                                <form method="POST" action="{{ url_for('student.accept_offer') }}">
+                                                                    <input type="hidden" name="project_id" value="{{ offer.id }}">
+                                                                    <button type="submit" class="btn btn-primary btn-sm">Accept</button>
+                                                                    <button type="button" class="btn btn-danger btn-sm" data-mdb-toggle="modal" data-mdb-whatever="{{offer}}" data-mdb-target="#rejectModal">Reject</button>
+                                                                </form>
+                                                            </td>
+                                                        {% endif %}
+                                                    </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+            </div>
+            </div>
+            </div>
+        <!-- Modal -->
+        <div class="modal fade" id="configModal" tabindex="1" data-mdb-backdrop="false" aria-labelledby="configModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="configModalLabel">Edit </h5>
+                        <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="POST" class="needs-validation" onsubmit="return selectAll()" id="configform" action="{{ url_for('student.profile') }}">
+                            <div class="mb-3">
+                                <label for="student_id" class="col-form-label">Student Id</label>
+                                <input type="number" required id="student_id" name="student_id" class="form-control">
+                            </div>
+                            <div class="mb-3">
+                                <label for="formal_name" class="col-form-label">Full Name</label>
+                                <input type="text" required id="formal_name" name="formal_name" class="form-control">
+                            </div>
+                            <div class="mb-3">
+                                <label for="preferred_name" class="col-form-label">Preffered Name</label>
+                                <input type="text" required id="preferred_name" name="preferred_name" class="form-control">
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="col-form-label">Email</label>
+                                <input type="text" required class="form-control" name="email" id="email">
+                            </div>
+                            <div class="mb-3">
+                                <label for="phone" class="col-form-label">Phone Number</label>
+                                <input type="text" required class="form-control" name="phone" id="phone">
+                            </div>
+                            <div class="mb-3">
+                                <label for="city" class="col-form-label">City</label>
+                                <input type="text" required class="form-control" name="city" id="city">
+                            </div>
+                            <div class="mb-3">
+                                <label for="project_preference" class="col-form-label">Project Preference</label>
+                                <textarea rows="5" cols="33" required class="form-control" name="project_preference" id="project_preference"></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="skills" class="col-form-label">Skills</label>
+                                <select class="form-select" id="skills" required name="skills" data-placeholder="Choose anything" multiple>
+                                    {% for row in all_skills %}
+                                        <option value="{{row[0]}}">{{row[1]}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
+                                <button type="submit" id="saveconfig" class="btn btn-primary">Save</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="rejectModal" tabindex="1" data-mdb-backdrop="false" aria-labelledby="#rejectModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="configModalLabel">Confirmation </h5>
+                        <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <h5 class="" id="configModalLabel">Are you sure that you wish to reject this offer? </h5>
+                        <form method="POST" class="needs-validation" id="reject_offer_form" action="{{ url_for('student.reject_offer') }}">
+                            <div class="modal-footer">
+                                <input type="hidden" name="project_id" id="project_id">
+                                <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">No</button>
+                                <button type="submit" id="saveconfig" class="btn btn-primary">Yes</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block scripts %}
+<script>
+  var configModal = document.getElementById('configModal')
+  var rejectModal = document.getElementById('rejectModal')
+  var submit = document.getElementById('saveconfig')
+  const forms = document.getElementById('configform');
+  var config = {}
+
+  submit.addEventListener('click', function (event) {
+    forms.addEventListener('submit', function (event) {
+    if (!forms.checkValidity()) {
+      event.preventDefault()
+      event.stopPropagation()
+    }
+    forms.classList.add('was-validated')
+  }, false)
+    
+  })
+
+  // Loop over them and prevent submission
+  Array.prototype.slice.call(forms)
+    .forEach(function (form) {
+      form.addEventListener('submit', function (event) {
+        if (!form.checkValidity()) {
+          event.preventDefault()
+          event.stopPropagation()
+        }
+
+        form.classList.add('was-validated')
+      }, false)
+    })
+
+
+  configModal.addEventListener('show.mdb.modal', function (event) {
+  // Button that triggered the modal
+  var button = event.relatedTarget
+  // Extract info from data-bs-* attributes
+  var currentconfig = button.getAttribute('data-mdb-whatever')
+  // Parsing the JSON string into an object
+  jsonString = currentconfig.replace(/'/g, '"');
+  currentconfig = JSON.parse(jsonString);
+
+ 
+  profile = {
+    studentId: currentconfig.student_id ?? "",
+    fullName: currentconfig.name ?? "",
+    preferredName: currentconfig.preferred_name ?? "",
+    role: currentconfig.role ?? "",
+    email: currentconfig.email ?? "",
+    phone: currentconfig.phone ?? "",
+    city: currentconfig.city ?? "",
+    projectPreference: currentconfig.project_preference ?? "",
+    skills: currentconfig.skills ?? ""
+  }
+
+  var modalStudentId = configModal.querySelector('#student_id')
+  var modalFullName = configModal.querySelector('#formal_name')
+  var modalPreferredName = configModal.querySelector('#preferred_name')
+  var modalCity = configModal.querySelector('#city')
+  var modalEmail = configModal.querySelector('#email')
+  var modalPhone = configModal.querySelector('#phone')
+  var modalProjectPreference = configModal.querySelector('#project_preference')
+  var modalSkills = configModal.querySelector('#skills')
+
+  modalStudentId.value = profile.studentId
+  modalFullName.value = profile.fullName
+  modalPreferredName.value = profile.preferredName
+  modalCity.value = profile.city
+  modalEmail.value = profile.email
+  modalPhone.value = profile.phone
+  modalProjectPreference.value = profile.projectPreference
+
+
+  // Update the modal's content.
+  var modalTitle = configModal.querySelector('.modal-title')
+  if (!profile.studentId) {
+        modalTitle.textContent = "Create profile"
+    }
+  modalTitle.textContent = modalTitle.textContent + ' ' + profile.preferredName
+
+  configModal.addEventListener('hide.mdb.modal', function (event) {
+    config = {}
+    modalTitle.textContent = "Edit"
+  })
+
+    // Manage skills
+    console.log(profile.skills)
+
+    $('#skills' ).value = profile.skills;
+
+    // Iterate over the options and set the selected attribute based on the pre-selected languages
+    for (var i = 0; i < modalSkills.options.length; i++) {
+        if (profile.skills.includes(modalSkills.options[i].label)) {
+            modalSkills.options[i].selected = true;
+        }
+    }
+
+    $('#skills' ).select2( {
+        theme: "bootstrap-5",
+        width: $( this ).data( 'width' ) ? $( this ).data( 'width' ) : $( this ).hasClass( 'w-100' ) ? '100%' : 'style',
+        placeholder: $( this ).data( 'placeholder' ),
+        closeOnSelect: false,
+    });
+    
+})
+
+rejectModal.addEventListener('show.mdb.modal', function (event) {
+    // Button that triggered the modal
+    var button = event.relatedTarget
+  // Extract info from data-bs-* attributes
+  var currentconfig = button.getAttribute('data-mdb-whatever')
+  // Parsing the JSON string into an object
+  jsonString = currentconfig.replace(/'/g, '"');
+  currentconfig = JSON.parse(jsonString);
+
+  console.log(currentconfig)
+  project_id = currentconfig.id
+
+  console.log('project_id', project_id)
+
+  var modalProjectId = rejectModal.querySelector('#project_id')
+  modalProjectId.value = project_id
+
+})
+</script>
+{% endblock %}

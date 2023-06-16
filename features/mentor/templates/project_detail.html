@@ -1,0 +1,104 @@
+
+
+{% extends "base.html" %}
+
+{% block title %}
+    Project List
+{% endblock %}
+{% block css %}
+    <meta charset="utf-8">
+    <title>Project List</title>
+
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static',filename='css/bootstrap.css') }}">
+
+    <link type="text/css" rel="stylesheet" href=" {{ url_for('static',filename='css/index.css') }}">
+    <!--css、JS-->
+
+    <!--Jquery-->
+
+    <script src="{{ url_for('static',filename='datatables/js/jquery.js') }}"></script>
+
+{% endblock %}
+
+
+{% block content %}
+<div id="title">
+
+</div>
+
+<div id="content-area" class="container">
+    <div class="row">
+        <div class="col">
+            <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
+                <ol class="breadcrumb mb-0">
+                    <li class="breadcrumb-item"><a href="{{ url_for('mentor.dashboard') }}">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Project List</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+<div class="container px-7 py-5" >
+    <div class="row">
+        <h3 style="text-align: center">Project List</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Project Name</th>
+                    <th>Mentor Name</th>
+                    <th>Project Description</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for datum in projects %}
+                    <tr>
+                        <td>{{ datum.1 }}</td>
+                        <td>{{ datum.3 }}</td>
+                        <td>{{ datum.2 }}</td>
+                        <td>
+                            
+                            {% if session.is_authenticated %}
+                                {% if session.role == 'mentor' %}
+                                    <a href="{{ url_for('mentor.view_project') }}?id={{ datum.0 }}" class="btn btn-primary">View</a>
+                                    <a href="{{ url_for('mentor.edit_project') }}?id={{ datum.0 }}" class="btn btn-secondary">Edit</a>
+                                    <a href="{{ url_for('mentor.remove_project') }}?id={{ datum.0 }}" class="btn btn-danger" id="remove_project" onclick="return confirm('Are you sure you want to remove this project?')">Remove</a>
+                                {% endif %}
+                                {% if session.role == 'student' %}
+                                    <a href="{{ url_for('staff.view_project') }}?id={{ datum.0 }}" class="btn btn-primary">View</a>
+                                    <a href="{{ url_for('student.add_to_wishlist') }}?id={{ datum.0 }}" class="btn btn-success">Add to Wishlist</a>
+                                {% endif %}
+                                {% if session.role == 'staff' %}
+                                <a href="{{ url_for('staff.view_project') }}?id={{ datum.0 }}" class="btn btn-primary">View</a>
+                        
+                                {% endif %}
+
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="row">
+        {% if session.is_authenticated %}
+            {% if session.role == 'mentor' %}
+            <div class="col-sm-4 offset-3">
+                <a href="{{ url_for('mentor.add_project') }}" >
+                  <button type="button" class="btn btn-primary" style="width: 120px">NEW</button>
+                </a>
+                <a href="{{ url_for('mentor.dashboard') }}" >
+                  <button type="button" class="btn btn-secondary" style="width: 120px">BACK</button>
+                </a>
+            </div>
+            {% endif %}
+            {% if session.role == 'staff' %}
+            <div class="row">
+                <div class="=col-8 offset-6">
+                    <button onclick="history.back()" class="btn btn-secondary" style="width: 120px">BACK</button>
+                </div>
+            </div>
+            {% endif %}
+        {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

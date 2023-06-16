@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% block title %}Profile{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div id="surveyElement"></div>
+                <div id="surveyResult"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <a href="/student/profile" class="btn btn-primary">Back</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block scripts %}
+    <script>
+        // Get the user object from the server
+        var user = {{ user|tojson }};
+        // Get the questions from the server
+        var questions = {{ questions|tojson }};
+        // Get the answers from the server
+        var survey_response = {{ answers|tojson }};
+
+        if (survey_response[1] == null) {
+            survey_response[1] = "{}";
+        }
+
+        if (survey_response[0] == null) {
+            survey_response[0] = "{}";
+        }
+
+        if (survey_response[2] == null) {
+            survey_response[2] = "{}";
+        }
+        answers = JSON.parse(survey_response[2]);
+        survey_id = questions[0];
+        survey_response_id = survey_response[0];
+        var surveyJson = questions[3];
+        const survey = new Survey.Model(surveyJson);
+        survey.data = {
+            "full_name": answers.full_name ? answers.full_name : user.name,
+            "preferred_name": answers.preferred_name ? answers.preferred_name : user.preferred_name,
+            "email": answers.email ? answers.email : user.email,
+            "phone": answers.phone ? answers.phone : user.phone,
+            "location": answers.location,
+            "skills": answers.skills ? answers.skills : user.skills,
+            "project_preference": answers.project_preference ? answers.project_preference : "",
+            "project_type": answers.project_type ? answers.project_type : "",
+        };
+
+        survey
+            .onComplete
+            .add(function (result) {
+                sendDataToServer(result);
+            });
+        $("#surveyElement").Survey({model: survey});
+
+        function sendDataToServer(result) {
+            //send Ajax request to your web server.
+            data = {
+                "survey_id": survey_id,
+                "survey_response_id": survey_response_id,
+                "data": result.data
+            }
+            $.ajax({
+                url: 'survey',
+                type: 'POST',
+                data: JSON.stringify(data),
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                async: false,
+                success: function (msg) {
+                    console.log(msg);
+                }
+            });
+        }
+    </script>
+{% endblock %}

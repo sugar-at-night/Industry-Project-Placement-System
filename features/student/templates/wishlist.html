@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block title %}Wishlist{% endblock %}
+
+{% block css %}
+    <meta charset="utf-8">
+    <title>project detail</title>
+
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static',filename='css/bootstrap.css') }}">
+
+    <link type="text/css" rel="stylesheet" href=" {{ url_for('static',filename='css/index.css') }}">
+    <!--css、JS-->
+
+    <!--Jquery-->
+
+    <script src="{{ url_for('static',filename='datatables/js/jquery.js') }}"></script>
+
+{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col">
+        <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
+            <ol class="breadcrumb mb-0">
+                {% if session.role == 'staff' %}
+                <li class="breadcrumb-item"><a href="{{ url_for('staff.dashboard') }}">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Wishlist</li>
+                {% elif session.role == 'mentor' %}
+                <li class="breadcrumb-item"><a href="{{ url_for('mentor.dashboard') }}">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Wishlist</li>
+                {% elif session.role == 'student' %}
+                <li class="breadcrumb-item"><a href="{{ url_for('student.dashboard') }}">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Wishlist</li>
+                {% endif %}
+            </ol>
+        </nav>
+    </div>
+</div>
+  
+  <h1>Wishlist</h1>
+
+  <form method="POST" action="{{ url_for('student.save_ranks') }}">
+    <table class="table table-hover table-striped">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Project Name</th>
+          <th>Project Description</th>
+          <th>Rank</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for project in wishlist %}
+        <tr>
+          <td><input type="hidden" name="project_id[]" value="{{ project.project_id }}"></td>
+          <td>{{ project.project_name }}</td>
+          <td>{{ project.project_description }}</td>
+          <td>
+            <input type="number" name="rank[]" min="1" required value="{{ project.rank }}">
+          </td>
+          <td>
+            <a href="{{ url_for('student.remove_from_wishlist', project_id=project.project_id) }}" class="btn btn-danger">Remove</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <input type="submit" value="Save Ranks" class="btn btn-primary">
+  </form>
+
+</div>
+{% endblock %}
+

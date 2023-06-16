@@ -1,0 +1,283 @@
+{% extends 'base.html' %}
+{% block title %}
+    Lincoln University Industry Project
+{% endblock %}
+
+{% block content %}
+
+<main>
+    <div class="container px-4 py-5">
+        <div class="row g-4 py-5 row-cols-1 row-cols-lg-2">
+            <div class="feature col">
+                <div class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3">
+                    <svg class="bi" width="1em" height="1em">
+                        <use xlink:href="#people-circle"/>
+                    </svg>
+                </div>
+                <a href="{{ url_for('mentor.project_detail') }}" class="btn btn-outline-primary">Project Info </a>
+                <a href="{{ url_for('mentor.company_profile') }}" class="btn btn-outline-primary">Company Info </a>            
+            </div>
+            <div class="feature col">
+                <div class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3">
+                    <svg class="bi" width="1em" height="1em">
+                        <use xlink:href="#collection"/>
+                    </svg>
+                </div>
+                <a href="{{url_for('mentor.student_preferred')}}" class="btn btn-outline-primary">Preferred Student Selection</a>
+            </div>
+            <div class="feature col">
+                <div class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3">
+                    <svg class="bi" width="1em" height="1em">
+                        <use xlink:href="#toggles2"/>
+                    </svg>
+                </div>
+                <a href="{{ url_for('mentor.contact_staff') }}" class="btn btn-outline-primary">Contact Staff in-Charge</a>
+            </div>
+            <div class="feature col">
+                <div class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3">
+
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-android2" viewBox="0 0 16 16">
+  <path d="m10.213 1.471.691-1.26c.046-.083.03-.147-.048-.192-.085-.038-.15-.019-.195.058l-.7 1.27A4.832 4.832 0 0 0 8.005.941c-.688 0-1.34.135-1.956.404l-.7-1.27C5.303 0 5.239-.018 5.154.02c-.078.046-.094.11-.049.193l.691 1.259a4.25 4.25 0 0 0-1.673 1.476A3.697 3.697 0 0 0 3.5 5.02h9c0-.75-.208-1.44-.623-2.072a4.266 4.266 0 0 0-1.664-1.476ZM6.22 3.303a.367.367 0 0 1-.267.11.35.35 0 0 1-.263-.11.366.366 0 0 1-.107-.264.37.37 0 0 1 .107-.265.351.351 0 0 1 .263-.11c.103 0 .193.037.267.11a.36.36 0 0 1 .112.265.36.36 0 0 1-.112.264Zm4.101 0a.351.351 0 0 1-.262.11.366.366 0 0 1-.268-.11.358.358 0 0 1-.112-.264c0-.103.037-.191.112-.265a.367.367 0 0 1 .268-.11c.104 0 .19.037.262.11a.367.367 0 0 1 .107.265c0 .102-.035.19-.107.264ZM3.5 11.77c0 .294.104.544.311.75.208.204.46.307.76.307h.758l.01 2.182c0 .276.097.51.292.703a.961.961 0 0 0 .7.288.973.973 0 0 0 .71-.288.95.95 0 0 0 .292-.703v-2.182h1.343v2.182c0 .276.097.51.292.703a.972.972 0 0 0 .71.288.973.973 0 0 0 .71-.288.95.95 0 0 0 .292-.703v-2.182h.76c.291 0 .54-.103.749-.308.207-.205.311-.455.311-.75V5.365h-9v6.404Zm10.495-6.587a.983.983 0 0 0-.702.278.91.91 0 0 0-.293.685v4.063c0 .271.098.501.293.69a.97.97 0 0 0 .702.284c.28 0 .517-.095.712-.284a.924.924 0 0 0 .293-.69V6.146a.91.91 0 0 0-.293-.685.995.995 0 0 0-.712-.278Zm-12.702.283a.985.985 0 0 1 .712-.283c.273 0 .507.094.702.283a.913.913 0 0 1 .293.68v4.063a.932.932 0 0 1-.288.69.97.97 0 0 1-.707.284.986.986 0 0 1-.712-.284.924.924 0 0 1-.293-.69V6.146c0-.264.098-.491.293-.68Z"/>
+</svg>
+                </div>
+                <a href="{{ url_for('mentor.student_list') }}" class="btn btn-outline-primary">view student</a>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+<div class="container">
+    <footer class="footer relative z-2 min-h-300 text-white bg-blue-black pt-12-5">
+        <div class="px-6-5 md:px-7-5 lg:px-12-5">
+            <div id="footer-top"
+                 class="pb-11-5 border-b-2 border-solid border-mid-grey md:flex md:flex-wrap md:justify-around">
+                <div class="flex-none md:w-1/2 lg:w-1/4 order-1">
+                    <h3 class="text-white text-sm leading-5 md:mr-7-5">Contact us</h3>
+                    <ul class="list-none px-0 mb-0 md:mr-7-5">
+                        <li class="mb-3-5">
+                            <a href="mailto:grow@lincoln.ac.nz"
+                               class="text-white text-13 leading-5 pb-0-5 border-b border-transparent hover:text-yellow hover:no-underline hover:border-yellow hover:border-solid hover:border-b">
+                                grow@lincoln.ac.nz
+                            </a>
+                        </li>
+                        <li class="mb-3-5">
+                            <a href="tel:+6434230000"
+                               class="text-white text-13 leading-5 pb-0-5 border-b border-transparent hover:text-yellow hover:no-underline hover:border-yellow hover:border-solid hover:border-b">
+                                +64 3 423 0000
+                            </a>
+                        </li>
+                        <li class="mb-3-5">
+                            <a href="tel:0800106010"
+                               class="text-white text-13 leading-5 pb-0-5 border-b border-transparent hover:text-yellow hover:no-underline hover:border-yellow hover:border-solid hover:border-b">
+                                0800 10 60 10
+                            </a>
+                        </li>
+                        <li class="mb-3-5">
+                            <p class="text-white text-13 leading-5 m-0">
+                                PO Box 85084<br>
+                                Ellesmere Junction Road<br>
+                                Lincoln University<br>
+                                Lincoln 7647, Canterbury<br>
+                                New Zealand
+                            </p>
+                        </li>
+                    </ul>
+                </div>
+                <div class="flex-none md:w-1/2 lg:w-1/4 md:order-3 lg:order-2">
+                    <h3 class="text-white text-sm leading-5 md:mr-7-5 mt-8-5 md:mt-0">Useful links</h3>
+                    <ul class="list-none px-0 mb-0 md:mr-7-5">
+                        <li class="mb-3-5">
+                            <a href="https://www.lincoln.ac.nz/life-at-lincoln/accommodation/" target="_blank"
+                               class="text-white text-13 leading-5 pb-0-5 border-b border-transparent hover:text-yellow hover:no-underline hover:border-yellow hover:border-solid hover:border-b">
+                                Accommodation
+                            </a>
+                        </li>
+                        <li class="mb-3-5">
+                            <a href="https://www.lincoln.ac.nz/study/apply-and-enrol/" target="_blank"
+                               class="text-white text-13 leading-5 pb-0-5 border-b border-transparent hover:text-yellow hover:no-underline hover:border-yellow hover:border-solid hover:border-b">
+                                Apply
+                            </a>
+                        </li>
+                        <li class="mb-3-5">
+                            <a href="https://www.lincoln.ac.nz/about-us/brochures-and-publications/" target="_blank"
+                               class="text-white text-13 leading-5 pb-0-5 border-b border-transparent hover:text-yellow hover:no-underline hover:border-yellow hover:border-solid hover:border-b">
+                                Brochures and Publications
+                            </a>
+                        </li>
+                        <li class="mb-3-5">
+                            <a href="https://www.lincoln.ac.nz/study/fees/" target="_blank"
+                               class="text-white text-13 leading-5 pb-0-5 border-b border-transparent hover:text-yellow hover:no-underline hover:border-yellow hover:border-solid hover:border-b">
+                                Fees
+                            </a>
+                        </li>
+                        <li class="mb-3-5">
+                            <a href="https://www.lincoln.ac.nz/study/study-programmes/" target="_blank"
+                               class="text-white text-13 leading-5 pb-0-5 border-b border-transparent hover:text-yellow hover:no-underline hover:border-yellow hover:border-solid hover:border-b">
+                                Programmes
+                            </a>
+                        </li>
+                        <li class="mb-3-5">
+                            <a href="https://www.lincoln.ac.nz/study/scholarships/" target="_blank"
+                               class="text-white text-13 leading-5 pb-0-5 border-b border-transparent hover:text-yellow hover:no-underline hover:border-yellow hover:border-solid hover:border-b">
+                                Scholarships
+                            </a>
+                        </li>
+                        <li class="mb-3-5">
+                            <a href="https://www.lincoln.ac.nz/about-us/legal-information/" target="_blank"
+                               rel="noopener noreferrer"
+                               class="text-white text-13 leading-5 pb-0-5 border-b border-transparent hover:text-yellow hover:no-underline hover:border-yellow hover:border-solid hover:border-b">
+                                Disclaimer, Privacy and Copyright
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="flex-none md:w-1/2 lg:w-1/4 md:order-2 lg:order-3">
+                    <h3 class="text-white text-sm leading-5 md:mr-7-5 mt-8-5 md:mt-0">Students</h3>
+                    <ul class="list-none px-0 mb-0 md:mr-7-5">
+                        <li class="mb-3-5">
+                            <a href="https://www.lincoln.ac.nz/student-support/behaviour-and-codes/concerns-and-feedback/"
+                               target="_blank"
+                               class="text-white text-13 leading-5 pb-0-5 border-b border-transparent hover:text-yellow hover:no-underline hover:border-yellow hover:border-solid hover:border-b">
+                                Concerns and Feedback
+                            </a>
+                        </li>
+                        <li class="mb-3-5">
+                            <a href="https://www.lincoln.ac.nz/life-at-lincoln/campus-map/map/" target="_blank"
+                               class="text-white text-13 leading-5 pb-0-5 border-b border-transparent hover:text-yellow hover:no-underline hover:border-yellow hover:border-solid hover:border-b">
+                                Map
+                            </a>
+                        </li>
+                        <li class="mb-3-5">
+                            <a href="https://www.lincoln.ac.nz/about-us/policies-and-procedures/policies-and-procedures-library/"
+                               target="_blank"
+                               class="text-white text-13 leading-5 pb-0-5 border-b border-transparent hover:text-yellow hover:no-underline hover:border-yellow hover:border-solid hover:border-b">
+                                Policies and Procedures
+                            </a>
+                        </li>
+                        <li class="mb-3-5">
+                            <a href="https://www.lincoln.ac.nz/student-support/finding-your-career/" target="_blank"
+                               class="text-white text-13 leading-5 pb-0-5 border-b border-transparent hover:text-yellow hover:no-underline hover:border-yellow hover:border-solid hover:border-b">
+                                Career Centre
+                            </a>
+                        </li>
+                        <li class="mb-3-5">
+                            <a href="https://ithelp.lincoln.ac.nz/" target="_blank" rel="noopener noreferrer"
+                               class="text-white text-13 leading-5 pb-0-5 border-b border-transparent hover:text-yellow hover:no-underline hover:border-yellow hover:border-solid hover:border-b external-link-yellow">
+                                IT Help
+                            </a>
+                        </li>
+                        <li class="mb-3-5">
+                            <a href="https://learn.lincoln.ac.nz" target="_blank" rel="noopener noreferrer"
+                               class="text-white text-13 leading-5 pb-0-5 border-b border-transparent hover:text-yellow hover:no-underline hover:border-yellow hover:border-solid hover:border-b external-link-yellow">
+                                Akoraka | Learn
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="flex-none md:w-1/2 lg:w-1/4 order-4">
+                    <ul class="list-none px-0 mb-0 md:mr-7-5 mt-8-5">
+                        <li class="mb-3-5">
+                            <a href="https://ltl.lincoln.ac.nz/" target="_blank" rel="noopener noreferrer"
+                               class="text-white text-13 leading-5 pb-0-5 border-b border-transparent hover:text-yellow hover:no-underline hover:border-yellow hover:border-solid hover:border-b external-link-yellow">
+                                Learning, Teaching and Library
+                            </a>
+                        </li>
+                        <li class="mb-3-5">
+                            <a href="https://lucas.lincoln.ac.nz" target="_blank" rel="noopener noreferrer"
+                               class="text-white text-13 leading-5 pb-0-5 border-b border-transparent hover:text-yellow hover:no-underline hover:border-yellow hover:border-solid hover:border-b external-link-yellow">
+                                LUCAS
+                            </a>
+                        </li>
+                        <li class="mb-3-5">
+                            <a href="https://mylinc.lincoln.ac.nz" target="_blank" rel="noopener noreferrer"
+                               class="text-white text-13 leading-5 pb-0-5 border-b border-transparent hover:text-yellow hover:no-underline hover:border-yellow hover:border-solid hover:border-b external-link-yellow">
+                                MyLinc
+                            </a>
+                        </li>
+                        <li class="mb-3-5">
+                            <a href="https://www.raftr.com/register" target="_blank" rel="noopener noreferrer"
+                               class="text-white text-13 leading-5 pb-0-5 border-b border-transparent hover:text-yellow hover:no-underline hover:border-yellow hover:border-solid hover:border-b external-link-yellow">
+                                Raftr
+                            </a>
+                        </li>
+                        <li class="mb-3-5">
+                            <a href="https://splus.lincoln.ac.nz/timetable/2023/" target="_blank"
+                               rel="noopener noreferrer"
+                               class="text-white text-13 leading-5 pb-0-5 border-b border-transparent hover:text-yellow hover:no-underline hover:border-yellow hover:border-solid hover:border-b external-link-yellow">
+                                2023 Timetable
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div id="footer-bottom" class="md:flex md:justify-between pb-10 md:pb-0">
+                <div id="footer-logo" class="md-footer-logo">
+                    <img src="{{ url_for('static', filename='logo-Lincoln-horizontal.svg') }}"
+                         alt="Lincoln University logo">
+                </div>
+                <div id="footer-social-media-icons" class="h-7-5 flex justify-center md:mt-7-5">
+                    <a href="https://www.facebook.com/LincolnUniNZ" target="_blank" rel="noopener noreferrer"
+                       aria-label="Facebook"
+                       class="h-7-5 ml-3-5 svg-text-white transition-colors duration-200 ease-in-out hover:svg-text-yellow focus:svg-text-yellow">
+                        <svg width="30px" height="30px" viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg"
+                             xmlns:xlink="http://www.w3.org/1999/xlink" class="fill-current">
+                            <g stroke="none" stroke-width="1" fill-rule="evenodd">
+                                <path d="M18.4508496,16.3737865 L18.8640777,13.6796117 L16.2791263,13.6796117 L16.2791263,11.9320389 C16.2791263,11.1949636 16.6402913,10.4757282 17.7980583,10.4757282 L18.973301,10.4757282 L18.973301,8.18203884 C18.973301,8.18203884 17.9067355,8 16.8869539,8 C14.7580097,8 13.3665049,9.29029127 13.3665049,11.6262136 L13.3665049,13.6796117 L11,13.6796117 L11,16.3737865 L13.3665049,16.3737865 L13.3665049,22.886772 C14.3315097,23.0377427 15.3141214,23.0377427 16.2791263,22.886772 L16.2791263,16.3737865 L18.4508496,16.3737865 Z"></path>
+                                <path d="M15,0 C23.2842712,0 30,6.71572875 30,15 C30,23.2842712 23.2842712,30 15,30 C6.71572875,30 0,23.2842712 0,15 C0,6.71572875 6.71572875,0 15,0 Z M15,1 C7.2680135,1 1,7.2680135 1,15 C1,22.7319865 7.2680135,29 15,29 C22.7319865,29 29,22.7319865 29,15 C29,7.2680135 22.7319865,1 15,1 Z"></path>
+                            </g>
+                        </svg>
+                    </a>
+                    <a href="https://www.linkedin.com/school/lincolnuninz" target="_blank" rel="noopener noreferrer"
+                       aria-label="LinkedIn"
+                       class="h-7-5 ml-3-5 svg-text-white transition-colors duration-200 ease-in-out hover:svg-text-yellow focus:svg-text-yellow">
+                        <svg width="30px" height="30px" viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg"
+                             xmlns:xlink="http://www.w3.org/1999/xlink" class="fill-current">
+                            <g stroke="none" stroke-width="1" fill-rule="evenodd">
+                                <path d="M15,0 C23.2842712,0 30,6.71572875 30,15 C30,23.2842712 23.2842712,30 15,30 C6.71572875,30 0,23.2842712 0,15 C0,6.71572875 6.71572875,0 15,0 Z M15,1 C7.2680135,1 1,7.2680135 1,15 C1,22.7319865 7.2680135,29 15,29 C22.7319865,29 29,22.7319865 29,15 C29,7.2680135 22.7319865,1 15,1 Z"></path>
+                                <path d="M11.6975,9.35416667 C11.6975,10.1022083 11.09625,10.7083333 10.3541667,10.7083333 C9.61208333,10.7083333 9.01083333,10.1022083 9.01083333,9.35416667 C9.01083333,8.60666667 9.61208333,8 10.3541667,8 C11.09625,8 11.6975,8.60666667 11.6975,9.35416667 Z M11.7083333,11.7916667 L9,11.7916667 L9,20.4583333 L11.7083333,20.4583333 L11.7083333,11.7916667 Z M16.0319167,11.7916667 L13.3409167,11.7916667 L13.3409167,20.4583333 L16.0324583,20.4583333 L16.0324583,15.908875 C16.0324583,13.3792917 19.2981667,13.172375 19.2981667,15.908875 L19.2981667,20.4583333 L22,20.4583333 L22,14.9707083 C22,10.702375 17.16725,10.8578333 16.0319167,12.9589583 L16.0319167,11.7916667 Z"></path>
+                            </g>
+                        </svg>
+                    </a>
+                    <a href="https://www.instagram.com/lincolnuninz" target="_blank" rel="noopener noreferrer"
+                       aria-label="Instagram"
+                       class="h-7-5 ml-3-5 svg-text-white transition-colors duration-200 ease-in-out hover:svg-text-yellow focus:svg-text-yellow">
+                        <svg width="30px" height="30px" viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg"
+                             xmlns:xlink="http://www.w3.org/1999/xlink" class="fill-current">
+                            <g stroke="none" stroke-width="1" fill-rule="evenodd">
+                                <path d="M14.999747,8 L14.9986356,8.00111139 L15.6891344,8.00162006 C16.9743786,8.00386 17.2407433,8.01406914 17.8840716,8.04334406 C18.6289781,8.07724133 19.1385486,8.19560394 19.583103,8.36842447 C20.0503256,8.5444492 20.4735797,8.82017113 20.8234098,9.17640212 C21.1793835,9.52606267 21.4548298,9.94914059 21.6305539,10.4161532 C21.8036523,10.8607077 21.9217371,11.3674997 21.9559122,12.1140733 C21.9621259,12.2498139 21.9674761,12.3687552 21.9720716,12.4839448 L21.9784121,12.6555464 C21.9900153,12.9996461 21.9953134,13.3686955 21.9972372,14.1149833 L21.9979315,14.5211947 C21.9980783,14.6681647 21.9981449,14.8272444 21.9981449,15.000065 L21.9980916,15.2492039 C21.9980555,15.3289541 21.9980006,15.4054759 21.9979253,15.4789728 L21.9972147,15.8852818 C21.9942688,17.0050743 21.9836463,17.2765877 21.9559122,17.8860566 C21.9220149,18.6309631 21.8036523,19.1405336 21.6305539,19.5850881 C21.2671532,20.5256442 20.5236592,21.2691382 19.583103,21.632539 C19.1385486,21.8056374 18.6317566,21.9237221 17.885183,21.9578972 C17.7494423,21.9641109 17.6305011,21.9694612 17.5153115,21.9740566 L17.3437098,21.9803972 C16.9996102,21.9920003 16.6305607,21.9972984 15.8842729,21.9992223 L15.4780615,21.9999166 C15.3310916,22.0000633 15.1720118,22.0001299 14.9991913,22.0001299 L14.7500524,22.0000766 C14.6703022,22.0000406 14.5937804,21.9999857 14.5202835,21.9999103 L14.1139744,21.9991997 C12.994182,21.9962538 12.7226686,21.9856314 12.1131996,21.9578972 C11.3682931,21.924 10.8587226,21.8056374 10.4141682,21.632539 C9.94690611,21.4567236 9.52362808,21.1810809 9.17386139,20.8248392 C8.81789831,20.4751152 8.5423728,20.0520613 8.36643944,19.5850881 C8.19361891,19.1405336 8.07553414,18.6331859 8.04135902,17.8866123 C8.01495097,17.3097146 8.00413792,17.0362556 8.00058695,16.064619 L8.00062022,13.9364958 C8.00423551,12.964624 8.01516567,12.6907942 8.04135902,12.1151846 C8.07525629,11.3702782 8.19361891,10.8607077 8.36643944,10.4161532 C8.54230137,9.94898125 8.817831,9.52573134 9.17386139,9.17584643 C9.5237463,8.81981603 9.94699622,8.54428641 10.4141682,8.36842447 C10.8587226,8.19560394 11.3671817,8.07640779 12.1137553,8.04223267 C12.2834311,8.0344656 12.4268579,8.02804757 12.5695195,8.02276658 L12.741977,8.01696161 C13.0634561,8.00726999 13.4305682,8.00267117 14.1146654,8.00090765 L14.999747,8 Z M14.999747,9.26114531 L14.1306686,9.26197697 C13.0331563,9.26464479 12.7752826,9.27448194 12.1712695,9.30198874 C11.4888785,9.33310755 11.1182313,9.44702462 10.8715036,9.54288167 C10.5671079,9.65496161 10.2917539,9.83394172 10.0657487,10.0666223 C9.83306807,10.2926276 9.65408797,10.5679816 9.54200802,10.8723772 C9.44615097,11.1191049 9.3322339,11.4897522 9.30111509,12.1721432 C9.29500247,12.3063683 9.28976242,12.4235001 9.28527972,12.5365513 L9.27910927,12.7046942 C9.26690824,13.0694211 9.26209812,13.4597693 9.26072326,14.3224387 L9.26072326,15.6788026 C9.26209812,16.541472 9.26690824,16.9318202 9.27910927,17.2965471 L9.28527972,17.46469 C9.28976242,17.5777412 9.29500247,17.694873 9.30111509,17.8290981 C9.3322339,18.5114891 9.44615097,18.8821364 9.54200802,19.1288641 C9.65408797,19.4332597 9.83306807,19.7086137 10.0657487,19.934619 C10.2917539,20.1672996 10.5671079,20.3462797 10.8715036,20.4583596 C11.1182313,20.5542167 11.4888785,20.6681337 12.1712695,20.6992526 C12.3054441,20.7053652 12.4225438,20.7106052 12.5355762,20.7150879 L12.7037003,20.7212584 C13.0403513,20.7325209 13.3989311,20.7374858 14.130646,20.7392643 L14.5292241,20.7399025 C14.6735322,20.7400363 14.8298312,20.740096 14.999747,20.740096 L15.2446113,20.7400494 C15.3229641,20.7400178 15.3981159,20.7399694 15.4702699,20.7399025 L15.868848,20.7392643 C16.6005629,20.7374858 16.9591427,20.7325209 17.2957937,20.7212584 L17.4639178,20.7150879 C17.5769502,20.7106052 17.6940499,20.7053652 17.8282245,20.6992526 C18.5106155,20.6681337 18.8812627,20.5542167 19.1279904,20.4583596 C19.738254,20.2226342 20.2206492,19.7402391 20.4563746,19.1299755 C20.5522316,18.8832478 20.6661487,18.5126005 20.6972675,17.8302095 C20.7033801,17.6959844 20.7086202,17.5788526 20.7131029,17.4658014 L20.7192733,17.2976585 C20.7305358,16.9609875 20.7355007,16.6024853 20.7372793,15.8708104 L20.7379174,15.4722487 C20.7380513,15.3279445 20.738111,15.1716478 20.738111,15.001732 L20.7380644,14.7568694 C20.7380327,14.6785177 20.7379843,14.6033675 20.7379174,14.5312154 L20.7372793,14.1326536 C20.7355007,13.4009788 20.7305358,13.0424766 20.7192733,12.7058055 L20.7131029,12.5376627 C20.7086202,12.4246115 20.7033801,12.3074797 20.6972675,12.1732546 C20.6661487,11.4908635 20.5522316,11.1202163 20.4563746,10.8734886 C20.3442946,10.5690929 20.1653145,10.2937389 19.9326339,10.0677337 C19.7066287,9.83505311 19.4312747,9.656073 19.126879,9.54399305 C18.8801513,9.44813601 18.5095041,9.33421894 17.8271131,9.30310013 C17.692888,9.29698751 17.5757561,9.29174746 17.462705,9.28726476 L17.2945621,9.28109431 C16.9298351,9.26889328 16.5394869,9.26408315 15.6768176,9.2627083 L14.9986356,9.26225669 L14.999747,9.26114531 Z M14.9986356,11.4063982 C15.9519053,11.4063245 16.8661526,11.7849768 17.5402161,12.4590402 C18.2142795,13.1331036 18.5929318,14.047351 18.5928581,15.0006206 C18.5928581,16.9856549 16.9836699,18.5948431 14.9986356,18.5948431 C13.0136014,18.5948431 11.4044132,16.9856549 11.4044132,15.0006206 C11.4044132,13.0155864 13.0136014,11.4063982 14.9986356,11.4063982 Z M14.9986356,12.66671 C13.7096523,12.66671 12.6647249,13.7116374 12.6647249,15.0006206 C12.6647249,16.2896039 13.7096523,17.3345313 14.9986356,17.3345313 C15.6176272,17.3345313 16.2112665,17.0886379 16.6489597,16.6509447 C17.0866528,16.2132516 17.3325463,15.6196122 17.3325463,15.0006206 C17.3325463,13.7116374 16.2876189,12.66671 14.9986356,12.66671 Z M18.7351155,10.4242108 C19.198996,10.4242108 19.5750455,10.8002603 19.5750455,11.2641408 C19.5750455,11.7280213 19.198996,12.1040708 18.7351155,12.1040708 C18.2712349,12.1040708 17.8951855,11.7280213 17.8951855,11.2641408 C17.8951855,10.8002603 18.2712349,10.4242108 18.7351155,10.4242108 Z"></path>
+                                <path d="M15,0 C23.2842712,0 30,6.71572875 30,15 C30,23.2842712 23.2842712,30 15,30 C6.71572875,30 0,23.2842712 0,15 C0,6.71572875 6.71572875,0 15,0 Z M15,1 C7.2680135,1 1,7.2680135 1,15 C1,22.7319865 7.2680135,29 15,29 C22.7319865,29 29,22.7319865 29,15 C29,7.2680135 22.7319865,1 15,1 Z"
+                                      fill-rule="nonzero"></path>
+                            </g>
+                        </svg>
+                    </a>
+                    <a href="https://twitter.com/LincolnUniNZ" target="_blank" rel="noopener noreferrer"
+                       aria-label="Twitter"
+                       class="h-7-5 ml-3-5 svg-text-white transition-colors duration-200 ease-in-out hover:svg-text-yellow focus:svg-text-yellow">
+                        <svg width="30px" height="30px" viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg"
+                             xmlns:xlink="http://www.w3.org/1999/xlink" class="fill-current">
+                            <g stroke="none" stroke-width="1" fill-rule="evenodd">
+                                <g>
+                                    <path d="M15,0 C23.2842712,0 30,6.71572875 30,15 C30,23.2842712 23.2842712,30 15,30 C6.71572875,30 0,23.2842712 0,15 C0,6.71572875 6.71572875,0 15,0 Z M15,1 C7.2680135,1 1,7.2680135 1,15 C1,22.7319865 7.2680135,29 15,29 C22.7319865,29 29,22.7319865 29,15 C29,7.2680135 22.7319865,1 15,1 Z M18.3831418,9 C19.2707535,9 20.0689655,9.37037037 20.6309068,9.9706258 C21.3333333,9.83014049 21.99106,9.57471264 22.5849298,9.22349936 C22.3550447,9.94508301 21.8697318,10.5453384 21.2311622,10.9284802 C21.8569604,10.8518519 22.4508301,10.6858238 23,10.4431673 C22.5849298,11.0625798 22.0613027,11.605364 21.4610473,12.0395913 C21.467433,12.1673052 21.467433,12.3014049 21.467433,12.4355045 C21.467433,16.5031928 18.3703704,21.1966794 12.706258,21.1966794 C10.9693487,21.1966794 9.34738186,20.6858238 8,19.8045977 C8.24265645,19.8365262 8.4853129,19.8492976 8.73435504,19.8492976 C10.1775223,19.8492976 11.5057471,19.357599 12.559387,18.5338442 C11.2120051,18.5083014 10.0753512,17.6206897 9.68582375,16.394636 C9.87739464,16.4329502 10.0689655,16.4521073 10.2669221,16.4521073 C10.5478927,16.4521073 10.8224777,16.4137931 11.0779055,16.3435504 C9.66666667,16.0561941 8.60664112,14.8173691 8.60664112,13.3231162 L8.60664112,13.3231162 L8.60664112,13.284802 C9.02171137,13.5146871 9.49425287,13.6551724 9.99872286,13.6679438 C9.16858238,13.1187739 8.62579821,12.1736909 8.62579821,11.1072797 C8.62579821,10.5453384 8.77905492,10.0153257 9.04086845,9.56194125 C10.5606641,11.4265645 12.8275862,12.6526181 15.3882503,12.7803321 C15.3307791,12.5568327 15.3052363,12.3205619 15.3052363,12.0779055 C15.3052363,10.3793103 16.6845466,9 18.3831418,9 Z"></path>
+                                </g>
+                            </g>
+                        </svg>
+                    </a>
+                    <a href="https://www.youtube.com/user/LincolnUniversityNZ" target="_blank" rel="noopener noreferrer"
+                       aria-label="YouTube"
+                       class="h-7-5 ml-3-5 svg-text-white transition-colors duration-200 ease-in-out hover:svg-text-yellow focus:svg-text-yellow">
+                        <svg width="30px" height="30px" viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg"
+                             xmlns:xlink="http://www.w3.org/1999/xlink" class="fill-current">
+                            <g stroke="none" stroke-width="1" fill-rule="evenodd">
+                                <path d="M15,0 C23.2842712,0 30,6.71572875 30,15 C30,23.2842712 23.2842712,30 15,30 C6.71572875,30 0,23.2842712 0,15 C0,6.71572875 6.71572875,0 15,0 Z M15,1 C7.2680135,1 1,7.2680135 1,15 C1,22.7319865 7.2680135,29 15,29 C22.7319865,29 29,22.7319865 29,15 C29,7.2680135 22.7319865,1 15,1 Z M15.4120812,9.75097043 C16.5852829,9.75945084 19.8986285,9.80609311 20.8560805,10.0626256 C21.5049251,10.2350256 22.0125952,10.7403432 22.188007,11.3883801 C22.4705916,12.4674428 22.4975878,14.6298632 22.500069,14.9561583 L22.5001702,15.0394216 C22.4984643,15.3657166 22.4762888,17.528137 22.188007,18.6071997 C22.0110736,19.2533355 21.5036755,19.7565013 20.8560805,19.9280166 C19.7933672,20.2130527 15.8201027,20.2389651 15.1064738,20.2413207 L14.8042651,20.2410067 C13.9112167,20.2370222 10.1651322,20.20415 9.13784263,19.9329542 C8.49111047,19.7591012 7.98594114,19.2539319 7.81208813,18.6071997 C7.55884452,17.6630198 7.51014383,15.8893943 7.50077831,15.2421485 L7.49903008,15.0895604 L7.49882716,15.0621794 L7.49882716,15.0621794 L7.49869114,14.9561583 C7.4987625,14.9425626 7.49886953,14.9257793 7.49903008,14.9060194 L7.50077831,14.7534314 C7.51014383,14.1061856 7.55884452,12.33256 7.81208813,11.3883801 C7.98594114,10.7416479 8.49111047,10.2364786 9.13784263,10.0626256 C10.0932746,9.80609311 13.4070794,9.75945084 14.5805148,9.75097043 L15.4120812,9.75097043 Z M13.4965383,12.748698 L13.4965383,17.2468818 L17.3935652,14.9977899 L13.4965383,12.748698 Z"></path>
+                            </g>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div id="footer-pattern" class="w-full h-20 flex flex-row opacity-40"></div>
+    </footer>
+</div>
+
+{% endblock %}

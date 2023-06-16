@@ -1,0 +1,100 @@
+
+{% extends 'base.html' %}
+{% block title %}
+    company list
+{% endblock %}
+
+{% block css %}
+    <meta charset="utf-8">
+    <title>project detail</title>
+
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static',filename='css/bootstrap.css') }}">
+
+    <link type="text/css" rel="stylesheet" href=" {{ url_for('static',filename='css/index.css') }}">
+    <!--css、JS-->
+
+    <!--Jquery-->
+
+    <script src="{{ url_for('static',filename='datatables/js/jquery.js') }}"></script>
+
+{% endblock %}
+
+{% block content%}
+
+<div id="title">
+
+</div>
+<div id="content-area" class="container">
+    <div class="row">
+        <div class="col">
+           <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
+               <ol class="breadcrumb mb-0">
+                   {% if session.role == 'staff' %}
+                     <li class="breadcrumb-item"><a href="{{ url_for('staff.dashboard') }}">Home</a></li>
+                   {% elif session.role == 'student'%}
+                     <li class="breadcrumb-item"><a href="{{ url_for('student.dashboard') }}">Home</a></li>
+                   {% endif %}
+                   <li class="breadcrumb-item active" aria-current="page">Company List</li>
+               </ol>
+            </nav>
+        </div>
+    </div>
+</div>
+
+    <div id="content_container" >
+
+        <div class="container px-7 py-5" >
+            <div class="row">
+                <h3 style="text-align: center">Company List</h3>
+                <table class="table table-hover table-striped">
+                    <thead>
+                    <tr class="bg-secondary text-white">
+                        
+                        <th scope="col">Company Name</th>
+                        <th scope="col">Detail</th>
+                        <th scope="col">Website</th>
+                        <th scope="col">Mentor</th>
+                        <th scope="col">Action</th> 
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for datum in companies %}
+                        <tr>
+                            <td >{{ datum.1 }}</td>
+                            <td  >{{ datum.2 }}</td>
+                            <td >{{ datum.3 }}</td>
+                            <td>
+                                {% if datum.4 %}   
+                                   {{ datum.4 }}
+                                
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if session.role == 'staff' %}
+                                  <a href="{{ url_for('staff.edit-com') }}?company_id={{ datum.0 }}" >
+                                  <button type="button"class="btn btn-primary" >edit</button>
+                                  </a>
+                                {% endif %}
+                                <a href="{{ url_for('staff.project_detail') }}?company_id={{ datum.0 }}" >
+                                    <button type="button"class="btn btn-primary" >Project</button>
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+<div class="row">
+    <div class="col-sm-4 offset-3"> 
+        <a href="{{ url_for('staff.add_company') }}" >
+
+           <button type="submit" class="btn btn-primary" style="width: 120px">NEW</button>
+           </a>
+        <!--<button type="reset" class="btn btn-secondary" style="width: 120px">Cancel</button> -->
+  </div> 
+</div> 
+
+{% endblock %}

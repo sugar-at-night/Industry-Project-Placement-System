@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% block title %}
+   project detail
+{% endblock %}
+{% block css %}
+    <meta charset="utf-8">
+    <title>project detail</title>
+
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static',filename='css/bootstrap.css') }}">
+
+    <link type="text/css" rel="stylesheet" href=" {{ url_for('static',filename='css/index.css') }}">
+    <!--css、JS-->
+
+    <!--Jquery-->
+
+    <script src="{{ url_for('static',filename='datatables/js/jquery.js') }}"></script>
+
+{% endblock %}
+
+{% block content %}
+<div id="title">
+
+</div>
+
+<div id="content-area" class="container">
+        <div class="row">
+            <div class="col">
+                <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
+                    <ol class="breadcrumb mb-0">
+                        {% if session.role == 'mentor' %}
+                        <li class="breadcrumb-item"><a href="{{ url_for('mentor.dashboard') }}">Home</a></li>
+                        {% elif session.role == 'student'%}
+                        <li class="breadcrumb-item"><a href="{{ url_for('student.dashboard') }}">Home</a></li>
+                        {% endif %}
+                        <li class="breadcrumb-item active" aria-current="page">Contact Staff</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    <div class="row">
+        <div class="col-12" style="margin: 20px 0"><h3 style="text-align: center">Contact Staff</h3></div>
+        <div class="col-8 offset-2">
+            {% if session.role == 'mentor' %}
+                <form action="{{ url_for('mentor.contact_staff') }}" method="post">
+            {% elif session.role == 'student'%}
+                <form action="{{ url_for('student.contact_staff') }}" method="post">
+            {% endif %}
+                <div class="row mb-3">
+                    <label for="subject" class="col-sm-2 col-form-label">Subject</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="subject" required id="subject">
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="message" class="col-sm-2 col-form-label">Message</label>
+                    <div class="col-sm-10">
+                    <textarea class="form-control" name="message" id="message"
+                              placeholder="textarea" required></textarea>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4 offset-3">
+                        <button type="submit" class="btn btn-primary" style="width: 120px">SEND</button>
+                        {% if session.role == 'mentor' %}
+                          <a href="{{ url_for('mentor.contact_staff') }}" >
+                        {% elif session.role == 'student' %}
+                          <a href="{{ url_for('student.contact_staff') }}" >
+                        {% endif %}
+                          <button onclick="history.back()" class="btn btn-secondary" style="width: 120px">CANCEL</button>
+                        </a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

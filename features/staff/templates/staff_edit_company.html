@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+{% block title %}
+    Edit Company
+{% endblock %}
+{% block css %}
+    <meta charset="utf-8">
+    <title>Edit Project</title>
+
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static',filename='css/bootstrap.css') }}">
+
+    <link type="text/css" rel="stylesheet" href=" {{ url_for('static',filename='css/index.css') }}">
+    <!--css、JS-->
+
+    <!--Jquery-->
+
+    <script src="{{ url_for('static',filename='datatables/js/jquery.js') }}"></script>
+
+{% endblock %}
+{% block content%}
+<div id="title">
+
+</div>
+
+<div id="content-area" class="container">
+    <div class="row">
+        <div class="col">
+            <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
+                <ol class="breadcrumb mb-0">
+                    <li class="breadcrumb-item"><a href="{{ url_for('staff.dashboard') }}">Home</a></li>
+                    <li class="breadcrumb-item"><a href="{{ url_for('staff.view-com') }}">Company List</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Edit Company</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12" style="margin: 20px 0"><h2 style="text-align: center">Edit Company Details</h2></div>
+        <div class="col-8 offset-2">
+            <form action="{{ url_for('staff.update_company') }}" method="post">
+                <div class="row mb-3" hidden>
+                    <label for="inputEmail3" class="col-sm-2 col-form-label">Company ID</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="companyid" value="{{ companies.0 }}" required id="companyid" readonly>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="inputEmail3" class="col-sm-2 col-form-label">Company Name</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" name="name" value="{{ companies.1 }}" required id="inputEmail3" readonly>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="validationTextarea" class="col-sm-2 col-form-label">Company Detail</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" name="detail" id="validationTextarea" required readonly>{{ companies.2 }}</textarea>
+                    </div>
+                </div>
+                 <div class="row mb-3">
+                    <label for="inputwebsite" class="col-sm-2 col-form-label">Website</label>
+                    <div class="col-sm-10">
+                        <input type="text" name="website" class="form-control" value="{{ companies.3 }}" required id="inputwebsite" readonly>
+                    </div>
+                </div>
+               <!-- <div class="row mb-3">
+                    <label for="inputMentor" class="col-sm-2 col-form-label">Mentor</label>
+                    <div class="col-sm-10">
+                        <input type="text" name="website" class="form-control" id="inputMentor">
+                    </div>
+                </div> -->
+                <div class="row mb-3">
+                    <label for="inputMentor" class="col-sm-2 col-form-label">Mentor</label>
+                    <div class="col-sm-10">
+                    <select class="form-select" id="mentor" required name="mentor" data-placeholder="Choose anything" multiple>
+                        {% for row in all_mentors %}
+                            <option value="{{row[0]}}">{{row[3]}}</option>
+                        {% endfor %}
+                    </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4 offset-3">
+                        <button type="submit" class="btn btn-primary" style="width: 120px">Save</button>
+                        <a href="{{ url_for('staff.view-com') }}" >
+                            <button type="button" class="btn btn-secondary" style="width: 120px">Cancel</button>
+                        </a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div id="footer_container">
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+
+   /* $('#mentor' ).value = mentors; */
+
+    $(document).ready(function() {
+      $('#mentor' ).select2( {
+        theme: "bootstrap-5",
+        width: $( this ).data( 'width' ) ? $( this ).data( 'width' ) : $( this ).hasClass( 'w-100' ) ? '100%' : 'style',
+        placeholder: $( this ).data( 'placeholder' ),
+        closeOnSelect: false,
+       })
+    });
+
+
+</script>
+{% endblock %}
+

@@ -1,0 +1,46 @@
+{% extends "base.html" %} {% block title %}CV{% endblock %} {% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col">
+        <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
+            <ol class="breadcrumb mb-0">
+                {% if session.role == 'staff' %}
+                <li class="breadcrumb-item"><a href="{{ url_for('staff.dashboard') }}">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Upload CV</li>
+                {% elif session.role == 'mentor' %}
+                <li class="breadcrumb-item"><a href="{{ url_for('mentor.dashboard') }}">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Upload CV</li>
+                {% elif session.role == 'student' %}
+                <li class="breadcrumb-item"><a href="{{ url_for('student.dashboard') }}">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Upload CV</li>
+                {% endif %}
+            </ol>
+        </nav>
+    </div>
+</div>
+
+  <h2>Upload CV</h2>
+  <p>Upload your CV here. It must be in PDF format and no larger than 5MB.</p>
+  <p>
+    if you want to update the CV uploaded before, please upload the latest
+    version to replace.
+  </p>
+  <p>
+    if you are not sure if you uploaded one before, please use the VIEW or Download
+    to check.
+  </p>
+  <form method="POST" action="{{ url_for('student.upload_cv') }}" enctype="multipart/form-data">
+    <div class="form-group">
+      <label for="cv">Select CV (PDF format, up to 5MB):</label>
+      <input type="file" name="file" class="form-control-file" id="cv" accept=".pdf" required />
+
+    <button type="submit" class="btn btn-primary" style="margin: 0px 10px 10px 10px;">Upload CV</button>
+    </div>
+  </form>
+  <br>
+  <h2>Other Operation</h2>
+  <a href="{{ url_for('student.view_cv') }}" target="_blank" class="btn btn-primary" style="margin: 10px 10px 10px 0px;">View CV</a>
+  <a href="{{ url_for('student.download_cv') }}" class="btn btn-primary" style="margin: 10px;">Download CV</a>
+
+</div>
+{% endblock %}

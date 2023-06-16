@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Student List
+{% endblock %}
+
+{% block css %}
+    <meta charset="utf-8">
+    <title>Add Project</title>
+
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static',filename='css/bootstrap.css') }}">
+
+    <link type="text/css" rel="stylesheet" href=" {{ url_for('static',filename='css/index.css') }}">
+    <!--css、JS-->
+
+    <!--Jquery-->
+
+    <script src="{{ url_for('static',filename='datatables/js/jquery.js') }}"></script>
+
+{% endblock %}
+
+
+
+{% block content %}
+<div id="title">
+
+</div>
+<div id="content-area" class="container">
+
+        <div class="row">
+            <div class="col">
+                <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
+                    <ol class="breadcrumb mb-0">
+                        <li class="breadcrumb-item"><a href="{{ url_for('staff.dashboard') }}">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Student List</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+
+  <div class="container">
+   <!-- <h3 style="text-align: center">Student List</h3> -->
+    <hr>
+    
+    <form method="POST" action="{{ url_for('staff.view_student') }}" class="mb-3">
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <input type="text" class="form-control" name="student_id" placeholder="Student ID">
+        </div>
+        <div class="col-md-6">
+          <input type="text" class="form-control" name="formal_name" placeholder="Formal Name">
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <input type="text" class="form-control" name="alternative_name" placeholder="Alternative Name">
+        </div>
+        <div class="col-md-6">
+          <input type="text" class="form-control" name="preferred_name" placeholder="Preferred Name">
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <input type="text" class="form-control" name="email" placeholder="Email">
+        </div>
+        <div class="col-md-6">
+          <input type="text" class="form-control" name="phone" placeholder="Phone">
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <select class="form-control" name="placement_status">
+            <option value="">Placement Status</option>
+            <option value="Not Looking">Not Looking</option>
+            <option value="Actively Looking">Actively Looking</option>
+            <option value="Placed">Placed</option>
+          </select>
+        </div>
+        <div class="col-md-6">
+          <button class="btn btn-primary" type="submit">Search</button>
+        </div>
+      </div>
+    </form>
+    
+    <div class="row">
+     <h3 style="text-align: center">Student List</h3>
+    </div>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Student ID</th>
+          <th>Formal Name</th>
+          <th>Alternative Name</th>
+          <th>Preferred Name</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <!-- <th>Placement Status</th> -->
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for student in students %}
+          <tr>
+            <td>{{ student.0 }}</td>
+            <td>{{ student.1 }}</td>
+            <td>{{ student.2 }}</td>
+            <td>{{ student.3 }}</td>
+            <td>{{ student.4 }}</td>
+            <td>{{ student.5 }}</td>
+            <!-- <td>{{ student.6 }}</td> -->
+            <td>
+              <a href="{{ url_for('staff.student_profile', student_id=student.0) }}" class="btn btn-primary">View Profile</a>
+              <a href="{{ url_for('staff.download_cv', student_id=student.0) }}" class="btn btn-success">Download CV</a>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}
+
+
